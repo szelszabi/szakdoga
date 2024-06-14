@@ -1,16 +1,19 @@
 from unicorn import *
 from unicorn.x86_const import *
 from getmc import asm_to_main_machine_code
+import capstone
+
+def my_hook_code(uc, address, size, user_data):
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
+    inst_bytes = uc.mem_read(address,size)
+    for i in md.disasm(inst_bytes, address):
+        print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
+
 
 data, main_addr = asm_to_main_machine_code('fakt.out')
-instructions = list(map(lambda x: x[1], data))
-ass_instructions : list = list(map(lambda x: x[2], data))
-X86_CODE32 = []
-for x in instructions:
-    X86_CODE32.extend(x)
 
-X86_CODE32 = bytes(X86_CODE32)
-# ADDRESS = data[0][0]
+# X86_CODE32 = b"\x66\xbb\x01\x00\x66\xb8\x01\x00\xeb\x08\x66\xf7\xe3\x66\x99\x66\xff\xc3\x66\x83\xfb\x05\x7e\xf2\x66\x89\xc1"
+X86_CODE32 = bytes(data)
 ADDRESS = 0x1000000
 try:
     # Initialize emulator in X86-32bit mode
@@ -23,15 +26,16 @@ try:
     mu.mem_write(ADDRESS, X86_CODE32)
     print('itt')
     # mu.reg_write(UC_X86_REG_ESP, ADDRESS + 0x200000)
+    mu.reg_write(UC_X86_REG_RSP, ADDRESS + 0x200000)
+
+    mu.hook_add(UC_HOOK_CODE, my_hook_code)
     # len(X86_CODE32)
-    mu.reg_write(UC_X86_REG_RIP, main_addr)
     print('ott')
-    mu.emu_start(main_addr, 10)
+    mu.emu_start(ADDRESS + main_addr, ADDRESS + len(X86_CODE32))
     print('amott')
 
     r_ax = mu.reg_read(UC_X86_REG_EAX)
     r_bx = mu.reg_read(UC_X86_REG_EBX)
-    i = mu.mem_read(mu.reg_read(UC_X86_REG_RBP)-2, 2)
-    print(r_ax, r_bx, i)
+    print(r_ax, r_bx)
 except UcError as e:
     print("ERROR: %s" % e)

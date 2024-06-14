@@ -12,16 +12,13 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
     for line in lines:
         machine_code = line[line.find('\t'):line.rfind('\t')+1].strip()
         if machine_code != '':
-            address = int(line[:line.find(":")].lstrip(),16) # Memory address
             if is_next_main:
-                main_mem_address = address
+                main_mem_address = len(r)
                 is_next_main = False
             instr_code = []
             for byte in machine_code.split():
                 instr_code.append(int(byte,16))
-
-            instruction = line[line.rfind('\t')+1:line.rfind('#')]
-            r.append((address, instr_code, instruction))
+            r.extend(instr_code)
         
         if line.find("<main>:") != -1:
             is_next_main = True
@@ -36,4 +33,4 @@ Futtatható állományt vár
 if __name__ == '__main__':
     r, mainadd = asm_to_main_machine_code("fakt.out")
     # [print(x) for x in r]
-    print(mainadd)
+    print(hex(mainadd))

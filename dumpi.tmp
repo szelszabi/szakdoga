@@ -5,7 +5,7 @@ fakt.out:     file format elf64-x86-64
 Disassembly of section .interp:
 
 0000000000000318 <.interp>:
- 318:	2f                   	(bad)  
+ 318:	2f                   	(bad)
  319:	6c                   	ins    BYTE PTR es:[rdi],dx
  31a:	69 62 36 34 2f 6c 64 	imul   esp,DWORD PTR [rdx+0x36],0x646c2f34
  321:	2d 6c 69 6e 75       	sub    eax,0x756e696c
@@ -45,14 +45,14 @@ Disassembly of section .note.gnu.build-id:
  364:	47                   	rex.RXB
  365:	4e 55                	rex.WRX push rbp
  367:	00 11                	add    BYTE PTR [rcx],dl
- 369:	27                   	(bad)  
+ 369:	27                   	(bad)
  36a:	de 69 52             	fisubr WORD PTR [rcx+0x52]
  36d:	90                   	nop
  36e:	3b 10                	cmp    edx,DWORD PTR [rax]
  370:	4c 1a 63 3a          	rex.WR sbb r12b,BYTE PTR [rbx+0x3a]
  374:	4c 10 5f 2c          	rex.WR adc BYTE PTR [rdi+0x2c],r11b
  378:	88 63 9d             	mov    BYTE PTR [rbx-0x63],ah
- 37b:	f5                   	cmc    
+ 37b:	f5                   	cmc
 
 Disassembly of section .note.ABI-tag:
 
@@ -73,7 +73,7 @@ Disassembly of section .note.ABI-tag:
  395:	00 00                	add    BYTE PTR [rax],al
  397:	00 00                	add    BYTE PTR [rax],al
  399:	00 00                	add    BYTE PTR [rax],al
- 39b:	00                   	.byte 0x0
+ 39b:	00                   	.byte 0
 
 Disassembly of section .gnu.hash:
 
@@ -89,7 +89,7 @@ Disassembly of section .gnu.hash:
  3b7:	00 05 00 00 00 00    	add    BYTE PTR [rip+0x0],al        # 3bd <__abi_tag+0x41>
  3bd:	00 00                	add    BYTE PTR [rax],al
  3bf:	00 d1                	add    cl,dl
- 3c1:	65 ce                	gs (bad) 
+ 3c1:	65 ce                	gs (bad)
  3c3:	6d                   	ins    DWORD PTR es:[rdi],dx
 
 Disassembly of section .dynsym:
@@ -166,7 +166,7 @@ Disassembly of section .dynsym:
  451:	00 00                	add    BYTE PTR [rax],al
  453:	00 00                	add    BYTE PTR [rax],al
  455:	00 00                	add    BYTE PTR [rax],al
- 457:	00                   	.byte 0x0
+ 457:	00                   	.byte 0
 
 Disassembly of section .dynstr:
 
@@ -182,7 +182,7 @@ Disassembly of section .dynstr:
  472:	72 74                	jb     4e8 <__abi_tag+0x16c>
  474:	5f                   	pop    rdi
  475:	6d                   	ins    DWORD PTR es:[rdi],dx
- 476:	61                   	(bad)  
+ 476:	61                   	(bad)
  477:	69 6e 00 6c 69 62 63 	imul   ebp,DWORD PTR [rsi+0x0],0x6362696c
  47e:	2e 73 6f             	cs jae 4f0 <__abi_tag+0x174>
  481:	2e 36 00 47 4c       	cs ss add BYTE PTR [rdi+0x4c],al
@@ -206,16 +206,15 @@ Disassembly of section .dynstr:
  4ae:	6f                   	outs   dx,DWORD PTR ds:[rsi]
  4af:	6e                   	outs   dx,BYTE PTR ds:[rsi]
  4b0:	65 54                	gs push rsp
- 4b2:	61                   	(bad)  
- 4b3:	62                   	(bad)  
- 4b4:	6c                   	ins    BYTE PTR es:[rdi],dx
- 4b5:	65 00 5f 5f          	add    BYTE PTR gs:[rdi+0x5f],bl
+ 4b2:	61                   	(bad)
+ 4b3:	62 6c 65             	(bad)
+ 4b6:	00 5f 5f             	add    BYTE PTR [rdi+0x5f],bl
  4b9:	67 6d                	ins    DWORD PTR es:[edi],dx
  4bb:	6f                   	outs   dx,DWORD PTR ds:[rsi]
  4bc:	6e                   	outs   dx,BYTE PTR ds:[rsi]
  4bd:	5f                   	pop    rdi
  4be:	73 74                	jae    534 <__abi_tag+0x1b8>
- 4c0:	61                   	(bad)  
+ 4c0:	61                   	(bad)
  4c1:	72 74                	jb     537 <__abi_tag+0x1bb>
  4c3:	5f                   	pop    rdi
  4c4:	5f                   	pop    rdi
@@ -229,11 +228,11 @@ Disassembly of section .dynstr:
  4d7:	6f                   	outs   dx,DWORD PTR ds:[rsi]
  4d8:	6e                   	outs   dx,BYTE PTR ds:[rsi]
  4d9:	65 54                	gs push rsp
- 4db:	61                   	(bad)  
+ 4db:	61                   	(bad)
  4dc:	62                   	.byte 0x62
  4dd:	6c                   	ins    BYTE PTR es:[rdi],dx
  4de:	65                   	gs
- 4df:	00                   	.byte 0x0
+ 4df:	00                   	.byte 0
 
 Disassembly of section .gnu.version:
 
@@ -264,7 +263,7 @@ Disassembly of section .gnu.version_r:
  50e:	00 00                	add    BYTE PTR [rax],al
  510:	b4 91                	mov    ah,0x91
  512:	96                   	xchg   esi,eax
- 513:	06                   	(bad)  
+ 513:	06                   	(bad)
  514:	00 00                	add    BYTE PTR [rax],al
  516:	02 00                	add    al,BYTE PTR [rax]
  518:	38 00                	cmp    BYTE PTR [rax],al
@@ -285,7 +284,7 @@ Disassembly of section .rela.dyn:
  532:	00 00                	add    BYTE PTR [rax],al
  534:	00 00                	add    BYTE PTR [rax],al
  536:	00 00                	add    BYTE PTR [rax],al
- 538:	f8                   	clc    
+ 538:	f8                   	clc
  539:	3d 00 00 00 00       	cmp    eax,0x0
  53e:	00 00                	add    BYTE PTR [rax],al
  540:	08 00                	or     BYTE PTR [rax],al
@@ -311,7 +310,7 @@ Disassembly of section .rela.dyn:
  56a:	00 00                	add    BYTE PTR [rax],al
  56c:	00 00                	add    BYTE PTR [rax],al
  56e:	00 00                	add    BYTE PTR [rax],al
- 570:	06                   	(bad)  
+ 570:	06                   	(bad)
  571:	00 00                	add    BYTE PTR [rax],al
  573:	00 01                	add    BYTE PTR [rcx],al
  575:	00 00                	add    BYTE PTR [rax],al
@@ -320,11 +319,11 @@ Disassembly of section .rela.dyn:
  57b:	00 00                	add    BYTE PTR [rax],al
  57d:	00 00                	add    BYTE PTR [rax],al
  57f:	00 e0                	add    al,ah
- 581:	3f                   	(bad)  
+ 581:	3f                   	(bad)
  582:	00 00                	add    BYTE PTR [rax],al
  584:	00 00                	add    BYTE PTR [rax],al
  586:	00 00                	add    BYTE PTR [rax],al
- 588:	06                   	(bad)  
+ 588:	06                   	(bad)
  589:	00 00                	add    BYTE PTR [rax],al
  58b:	00 02                	add    BYTE PTR [rdx],al
  58d:	00 00                	add    BYTE PTR [rax],al
@@ -333,11 +332,11 @@ Disassembly of section .rela.dyn:
  593:	00 00                	add    BYTE PTR [rax],al
  595:	00 00                	add    BYTE PTR [rax],al
  597:	00 e8                	add    al,ch
- 599:	3f                   	(bad)  
+ 599:	3f                   	(bad)
  59a:	00 00                	add    BYTE PTR [rax],al
  59c:	00 00                	add    BYTE PTR [rax],al
  59e:	00 00                	add    BYTE PTR [rax],al
- 5a0:	06                   	(bad)  
+ 5a0:	06                   	(bad)
  5a1:	00 00                	add    BYTE PTR [rax],al
  5a3:	00 03                	add    BYTE PTR [rbx],al
  5a5:	00 00                	add    BYTE PTR [rax],al
@@ -346,11 +345,11 @@ Disassembly of section .rela.dyn:
  5ab:	00 00                	add    BYTE PTR [rax],al
  5ad:	00 00                	add    BYTE PTR [rax],al
  5af:	00 f0                	add    al,dh
- 5b1:	3f                   	(bad)  
+ 5b1:	3f                   	(bad)
  5b2:	00 00                	add    BYTE PTR [rax],al
  5b4:	00 00                	add    BYTE PTR [rax],al
  5b6:	00 00                	add    BYTE PTR [rax],al
- 5b8:	06                   	(bad)  
+ 5b8:	06                   	(bad)
  5b9:	00 00                	add    BYTE PTR [rax],al
  5bb:	00 04 00             	add    BYTE PTR [rax+rax*1],al
  5be:	00 00                	add    BYTE PTR [rax],al
@@ -358,30 +357,30 @@ Disassembly of section .rela.dyn:
  5c2:	00 00                	add    BYTE PTR [rax],al
  5c4:	00 00                	add    BYTE PTR [rax],al
  5c6:	00 00                	add    BYTE PTR [rax],al
- 5c8:	f8                   	clc    
- 5c9:	3f                   	(bad)  
+ 5c8:	f8                   	clc
+ 5c9:	3f                   	(bad)
  5ca:	00 00                	add    BYTE PTR [rax],al
  5cc:	00 00                	add    BYTE PTR [rax],al
  5ce:	00 00                	add    BYTE PTR [rax],al
- 5d0:	06                   	(bad)  
+ 5d0:	06                   	(bad)
  5d1:	00 00                	add    BYTE PTR [rax],al
  5d3:	00 05 00 00 00 00    	add    BYTE PTR [rip+0x0],al        # 5d9 <__abi_tag+0x25d>
  5d9:	00 00                	add    BYTE PTR [rax],al
  5db:	00 00                	add    BYTE PTR [rax],al
  5dd:	00 00                	add    BYTE PTR [rax],al
- 5df:	00                   	.byte 0x0
+ 5df:	00                   	.byte 0
 
 Disassembly of section .init:
 
 0000000000001000 <_init>:
-    1000:	f3 0f 1e fa          	endbr64 
+    1000:	f3 0f 1e fa          	endbr64
     1004:	48 83 ec 08          	sub    rsp,0x8
     1008:	48 8b 05 d9 2f 00 00 	mov    rax,QWORD PTR [rip+0x2fd9]        # 3fe8 <__gmon_start__@Base>
     100f:	48 85 c0             	test   rax,rax
     1012:	74 02                	je     1016 <_init+0x16>
     1014:	ff d0                	call   rax
     1016:	48 83 c4 08          	add    rsp,0x8
-    101a:	c3                   	ret    
+    101a:	c3                   	ret
 
 Disassembly of section .plt:
 
@@ -399,7 +398,7 @@ Disassembly of section .plt.got:
 Disassembly of section .text:
 
 0000000000001040 <_start>:
-    1040:	f3 0f 1e fa          	endbr64 
+    1040:	f3 0f 1e fa          	endbr64
     1044:	31 ed                	xor    ebp,ebp
     1046:	49 89 d1             	mov    r9,rdx
     1049:	5e                   	pop    rsi
@@ -411,7 +410,7 @@ Disassembly of section .text:
     1056:	31 c9                	xor    ecx,ecx
     1058:	48 8d 3d ca 00 00 00 	lea    rdi,[rip+0xca]        # 1129 <main>
     105f:	ff 15 73 2f 00 00    	call   QWORD PTR [rip+0x2f73]        # 3fd8 <__libc_start_main@GLIBC_2.34>
-    1065:	f4                   	hlt    
+    1065:	f4                   	hlt
     1066:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
     106d:	00 00 00 
 
@@ -425,7 +424,7 @@ Disassembly of section .text:
     108d:	74 09                	je     1098 <deregister_tm_clones+0x28>
     108f:	ff e0                	jmp    rax
     1091:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
-    1098:	c3                   	ret    
+    1098:	c3                   	ret
     1099:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
 
 00000000000010a0 <register_tm_clones>:
@@ -443,11 +442,11 @@ Disassembly of section .text:
     10ce:	74 08                	je     10d8 <register_tm_clones+0x38>
     10d0:	ff e0                	jmp    rax
     10d2:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
-    10d8:	c3                   	ret    
+    10d8:	c3                   	ret
     10d9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
 
 00000000000010e0 <__do_global_dtors_aux>:
-    10e0:	f3 0f 1e fa          	endbr64 
+    10e0:	f3 0f 1e fa          	endbr64
     10e4:	80 3d 25 2f 00 00 00 	cmp    BYTE PTR [rip+0x2f25],0x0        # 4010 <__TMC_END__>
     10eb:	75 2b                	jne    1118 <__do_global_dtors_aux+0x38>
     10ed:	55                   	push   rbp
@@ -460,13 +459,13 @@ Disassembly of section .text:
     1107:	e8 64 ff ff ff       	call   1070 <deregister_tm_clones>
     110c:	c6 05 fd 2e 00 00 01 	mov    BYTE PTR [rip+0x2efd],0x1        # 4010 <__TMC_END__>
     1113:	5d                   	pop    rbp
-    1114:	c3                   	ret    
+    1114:	c3                   	ret
     1115:	0f 1f 00             	nop    DWORD PTR [rax]
-    1118:	c3                   	ret    
+    1118:	c3                   	ret
     1119:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
 
 0000000000001120 <frame_dummy>:
-    1120:	f3 0f 1e fa          	endbr64 
+    1120:	f3 0f 1e fa          	endbr64
     1124:	e9 77 ff ff ff       	jmp    10a0 <register_tm_clones>
 
 0000000000001129 <main>:
@@ -479,7 +478,7 @@ Disassembly of section .text:
 
 000000000000113d <body>:
     113d:	66 f7 e3             	mul    bx
-    1140:	66 99                	cwd    
+    1140:	66 99                	cwd
     1142:	66 ff c3             	inc    bx
     1145:	66 89 5d fe          	mov    WORD PTR [rbp-0x2],bx
 
@@ -492,10 +491,10 @@ Disassembly of section .text:
 Disassembly of section .fini:
 
 0000000000001158 <_fini>:
-    1158:	f3 0f 1e fa          	endbr64 
+    1158:	f3 0f 1e fa          	endbr64
     115c:	48 83 ec 08          	sub    rsp,0x8
     1160:	48 83 c4 08          	add    rsp,0x8
-    1164:	c3                   	ret    
+    1164:	c3                   	ret
 
 Disassembly of section .rodata:
 
@@ -513,16 +512,16 @@ Disassembly of section .eh_frame_hdr:
     200c:	03 00                	add    eax,DWORD PTR [rax]
     200e:	00 00                	add    BYTE PTR [rax],al
     2010:	1c f0                	sbb    al,0xf0
-    2012:	ff                   	(bad)  
+    2012:	ff                   	(bad)
     2013:	ff 54 00 00          	call   QWORD PTR [rax+rax*1+0x0]
     2017:	00 2c f0             	add    BYTE PTR [rax+rsi*8],ch
-    201a:	ff                   	(bad)  
-    201b:	ff                   	(bad)  
+    201a:	ff                   	(bad)
+    201b:	ff                   	(bad)
     201c:	7c 00                	jl     201e <__GNU_EH_FRAME_HDR+0x1a>
     201e:	00 00                	add    BYTE PTR [rax],al
     2020:	3c f0                	cmp    al,0xf0
-    2022:	ff                   	(bad)  
-    2023:	ff                   	(bad)  
+    2022:	ff                   	(bad)
+    2023:	ff                   	(bad)
     2024:	3c 00                	cmp    al,0x0
     2026:	00 00                	add    BYTE PTR [rax],al
 
@@ -542,13 +541,13 @@ Disassembly of section .eh_frame:
     2041:	00 00                	add    BYTE PTR [rax],al
     2043:	00 1c 00             	add    BYTE PTR [rax+rax*1],bl
     2046:	00 00                	add    BYTE PTR [rax],al
-    2048:	f8                   	clc    
+    2048:	f8                   	clc
     2049:	ef                   	out    dx,eax
-    204a:	ff                   	(bad)  
+    204a:	ff                   	(bad)
     204b:	ff 26                	jmp    QWORD PTR [rsi]
     204d:	00 00                	add    BYTE PTR [rax],al
     204f:	00 00                	add    BYTE PTR [rax],al
-    2051:	44 07                	rex.R (bad) 
+    2051:	44 07                	rex.R (bad)
     2053:	10 00                	adc    BYTE PTR [rax],al
     2055:	00 00                	add    BYTE PTR [rax],al
     2057:	00 24 00             	add    BYTE PTR [rax+rax*1],ah
@@ -559,7 +558,7 @@ Disassembly of section .eh_frame:
     2063:	ff 10                	call   QWORD PTR [rax]
     2065:	00 00                	add    BYTE PTR [rax],al
     2067:	00 00                	add    BYTE PTR [rax],al
-    2069:	0e                   	(bad)  
+    2069:	0e                   	(bad)
     206a:	10 46 0e             	adc    BYTE PTR [rsi+0xe],al
     206d:	18 4a 0f             	sbb    BYTE PTR [rdx+0xf],cl
     2070:	0b 77 08             	or     esi,DWORD PTR [rdi+0x8]
@@ -642,7 +641,7 @@ Disassembly of section .dynamic:
     3e52:	00 00                	add    BYTE PTR [rax],al
     3e54:	00 00                	add    BYTE PTR [rax],al
     3e56:	00 00                	add    BYTE PTR [rax],al
-    3e58:	f8                   	clc    
+    3e58:	f8                   	clc
     3e59:	3d 00 00 00 00       	cmp    eax,0x0
     3e5e:	00 00                	add    BYTE PTR [rax],al
     3e60:	1c 00                	sbb    al,0x0
@@ -653,8 +652,8 @@ Disassembly of section .dynamic:
     3e6a:	00 00                	add    BYTE PTR [rax],al
     3e6c:	00 00                	add    BYTE PTR [rax],al
     3e6e:	00 00                	add    BYTE PTR [rax],al
-    3e70:	f5                   	cmc    
-    3e71:	fe                   	(bad)  
+    3e70:	f5                   	cmc
+    3e71:	fe                   	(bad)
     3e72:	ff 6f 00             	jmp    FWORD PTR [rdi+0x0]
     3e75:	00 00                	add    BYTE PTR [rax],al
     3e77:	00 a0 03 00 00 00    	add    BYTE PTR [rax+0x3],ah
@@ -665,7 +664,7 @@ Disassembly of section .dynamic:
     3e8a:	00 00                	add    BYTE PTR [rax],al
     3e8c:	00 00                	add    BYTE PTR [rax],al
     3e8e:	00 00                	add    BYTE PTR [rax],al
-    3e90:	06                   	(bad)  
+    3e90:	06                   	(bad)
     3e91:	00 00                	add    BYTE PTR [rax],al
     3e93:	00 00                	add    BYTE PTR [rax],al
     3e95:	00 00                	add    BYTE PTR [rax],al
@@ -698,11 +697,11 @@ Disassembly of section .dynamic:
     3ed3:	00 00                	add    BYTE PTR [rax],al
     3ed5:	00 00                	add    BYTE PTR [rax],al
     3ed7:	00 c0                	add    al,al
-    3ed9:	3f                   	(bad)  
+    3ed9:	3f                   	(bad)
     3eda:	00 00                	add    BYTE PTR [rax],al
     3edc:	00 00                	add    BYTE PTR [rax],al
     3ede:	00 00                	add    BYTE PTR [rax],al
-    3ee0:	07                   	(bad)  
+    3ee0:	07                   	(bad)
     3ee1:	00 00                	add    BYTE PTR [rax],al
     3ee3:	00 00                	add    BYTE PTR [rax],al
     3ee5:	00 00                	add    BYTE PTR [rax],al
@@ -733,7 +732,7 @@ Disassembly of section .dynamic:
     3f1b:	00 00                	add    BYTE PTR [rax],al
     3f1d:	00 00                	add    BYTE PTR [rax],al
     3f1f:	00 fb                	add    bl,bh
-    3f21:	ff                   	(bad)  
+    3f21:	ff                   	(bad)
     3f22:	ff 6f 00             	jmp    FWORD PTR [rdi+0x0]
     3f25:	00 00                	add    BYTE PTR [rax],al
     3f27:	00 01                	add    BYTE PTR [rcx],al
@@ -741,7 +740,7 @@ Disassembly of section .dynamic:
     3f2b:	08 00                	or     BYTE PTR [rax],al
     3f2d:	00 00                	add    BYTE PTR [rax],al
     3f2f:	00 fe                	add    dh,bh
-    3f31:	ff                   	(bad)  
+    3f31:	ff                   	(bad)
     3f32:	ff 6f 00             	jmp    FWORD PTR [rdi+0x0]
     3f35:	00 00                	add    BYTE PTR [rax],al
     3f37:	00 f0                	add    al,dh
@@ -749,7 +748,7 @@ Disassembly of section .dynamic:
     3f3b:	00 00                	add    BYTE PTR [rax],al
     3f3d:	00 00                	add    BYTE PTR [rax],al
     3f3f:	00 ff                	add    bh,bh
-    3f41:	ff                   	(bad)  
+    3f41:	ff                   	(bad)
     3f42:	ff 6f 00             	jmp    FWORD PTR [rdi+0x0]
     3f45:	00 00                	add    BYTE PTR [rax],al
     3f47:	00 01                	add    BYTE PTR [rcx],al
@@ -757,7 +756,7 @@ Disassembly of section .dynamic:
     3f4b:	00 00                	add    BYTE PTR [rax],al
     3f4d:	00 00                	add    BYTE PTR [rax],al
     3f4f:	00 f0                	add    al,dh
-    3f51:	ff                   	(bad)  
+    3f51:	ff                   	(bad)
     3f52:	ff 6f 00             	jmp    FWORD PTR [rdi+0x0]
     3f55:	00 00                	add    BYTE PTR [rax],al
     3f57:	00 e0                	add    al,ah
@@ -765,7 +764,7 @@ Disassembly of section .dynamic:
     3f5b:	00 00                	add    BYTE PTR [rax],al
     3f5d:	00 00                	add    BYTE PTR [rax],al
     3f5f:	00 f9                	add    cl,bh
-    3f61:	ff                   	(bad)  
+    3f61:	ff                   	(bad)
     3f62:	ff 6f 00             	jmp    FWORD PTR [rdi+0x0]
     3f65:	00 00                	add    BYTE PTR [rax],al
     3f67:	00 03                	add    BYTE PTR [rbx],al
@@ -812,7 +811,7 @@ Disassembly of section .dynamic:
     3fb9:	00 00                	add    BYTE PTR [rax],al
     3fbb:	00 00                	add    BYTE PTR [rax],al
     3fbd:	00 00                	add    BYTE PTR [rax],al
-    3fbf:	00                   	.byte 0x0
+    3fbf:	00                   	.byte 0
 
 Disassembly of section .got:
 
@@ -862,15 +861,7 @@ Disassembly of section .data:
     4008:	08 40 00             	or     BYTE PTR [rax+0x0],al
     400b:	00 00                	add    BYTE PTR [rax],al
     400d:	00 00                	add    BYTE PTR [rax],al
-    400f:	00                   	.byte 0x0
-
-Disassembly of section .bss:
-
-0000000000004010 <completed.0>:
-    4010:	00 00                	add    BYTE PTR [rax],al
-    4012:	00 00                	add    BYTE PTR [rax],al
-    4014:	00 00                	add    BYTE PTR [rax],al
-    4016:	00 00                	add    BYTE PTR [rax],al
+    400f:	00                   	.byte 0
 
 Disassembly of section .comment:
 
