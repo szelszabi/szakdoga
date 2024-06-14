@@ -4,6 +4,7 @@
 from __future__ import print_function
 from unicorn import *
 from unicorn.x86_const import *
+import capstone
 import pickle
 
 X86_CODE32 = b"\x41\x4a\x66\x0f\xef\xc1" # INC ecx; DEC edx; PXOR xmm0, xmm1
@@ -82,7 +83,11 @@ def hook_in(uc, port, size, user_data):
 
 
 def my_hook_code(uc, address, size, user_data):
-    print("xd")
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
+    inst_bytes = uc.mem_read(address,size)
+    for i in md.disasm(inst_bytes, address):
+        print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
+    # print(hex(address), size)
 
 # callback for OUT instruction
 def hook_out(uc, port, size, value, user_data):
@@ -127,7 +132,7 @@ def test_i386():
         mu.hook_add(UC_HOOK_BLOCK, hook_block)
 
         # tracing all instructions with customized callback
-        mu.hook_add(UC_HOOK_CODE, hook_code)
+        #mu.hook_add(UC_HOOK_CODE, my_hook_code)
 
         # emulate machine code in infinite time
         mu.emu_start(ADDRESS, ADDRESS + len(X86_CODE32))

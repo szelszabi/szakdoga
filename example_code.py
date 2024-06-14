@@ -2,7 +2,7 @@ from unicorn import *
 from unicorn.x86_const import *
 
 # code to be emulated
-X86_CODE32 = b"\xf3\x0f\x1e\xfa" # INC ecx; DEC edx f3 0f 1e fa
+X86_CODE32 = b"\xFF\xC1" # INC ecx; DEC edx f3 0f 1e fa
 
 # memory address where emulation starts
 ADDRESS = 0x1000000
@@ -17,13 +17,12 @@ try:
 
     # write machine code to be emulated to memory
     mu.mem_write(ADDRESS, X86_CODE32)
-
     # initialize machine registers
     mu.reg_write(UC_X86_REG_ECX, 0x1234)
     mu.reg_write(UC_X86_REG_EDX, 0x7890)
 
     # emulate code in infinite time & unlimited instructions
-    mu.emu_start(ADDRESS, ADDRESS + 1)
+    mu.emu_start(ADDRESS, ADDRESS + 2)
 
     # now print out some registers
     print("Emulation done. Below is the CPU context")
@@ -32,8 +31,6 @@ try:
     r_edx = mu.reg_read(UC_X86_REG_EDX)
     print(">>> ECX = 0x%x" %r_ecx)
     print(">>> EDX = 0x%x" %r_edx)
-
-    mu.emu_start(ADDRESS + 1, ADDRESS + 2)
 
     # now print out some registers
     print("Emulation done. Below is the CPU context")

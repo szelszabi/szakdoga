@@ -1,0 +1,3 @@
+- Egy utasítás hányszor futott le -> python dict {memcím: hányszor}
+- Konstansok számolása: op_str splitelése, ha 0x-szel kezdődik akkor király
+- 
