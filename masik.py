@@ -2,7 +2,7 @@ from unicorn import *
 from unicorn.x86_const import *
 from getmc import asm_to_main_machine_code
 
-data = asm_to_main_machine_code('fakt.out')
+data, main_addr = asm_to_main_machine_code('fakt.out')
 instructions = list(map(lambda x: x[1], data))
 ass_instructions : list = list(map(lambda x: x[2], data))
 X86_CODE32 = []
@@ -24,9 +24,11 @@ try:
     print('itt')
     # mu.reg_write(UC_X86_REG_ESP, ADDRESS + 0x200000)
     # len(X86_CODE32)
+    mu.reg_write(UC_X86_REG_RIP, main_addr)
     print('ott')
-    mu.emu_start(ADDRESS+1, ADDRESS +2)
+    mu.emu_start(main_addr, 10)
     print('amott')
+
     r_ax = mu.reg_read(UC_X86_REG_EAX)
     r_bx = mu.reg_read(UC_X86_REG_EBX)
     i = mu.mem_read(mu.reg_read(UC_X86_REG_RBP)-2, 2)
