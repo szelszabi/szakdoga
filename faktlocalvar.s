@@ -17,3 +17,7 @@ cond:   mov bx, WORD PTR [rbp-2]
         cmp bx, 5
         jle body
         mov rsp, rbp
+        pop rbp
+        pop rdx
+        push rdx
+        ret

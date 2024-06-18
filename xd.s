@@ -1,6 +1,6 @@
         .intel_syntax noprefix
 	.section .rodata
-.TXT: .string	"xD\n"
+.TXT:   .string	    "xD\n"
 	.globl main
 	.text
 main:

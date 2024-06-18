@@ -1,11 +1,13 @@
 .intel_syntax noprefix
-.global _main
-_main:
-    mov rax, 0x1
+.global main
+main:
+    mov rax, 0x0
     mov rdi, 0x1
     lea rsi, [xd]
-    mov rdx, 0x2
+    mov rdx, 0x3
     syscall
+    mov rax, 0
+    ret
 
 xd:
-    .asciz "xd"
+    .asciz "xd\n"

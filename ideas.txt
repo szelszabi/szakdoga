@@ -1,3 +1,12 @@
-- Egy utasítás hányszor futott le -> python dict {memcím: hányszor}
-- Konstansok számolása: op_str splitelése, ha 0x-szel kezdődik akkor király
-- 
+- Egy utasítás hányszor futott le -> python dict {memcím: hányszor} pipa
+- Konstansok számolása: op_str splitelése, ha 0x-szel kezdődik akkor király pipa
+- Memóriaműveletek -> memory típusú hook használata pipa
+- A teljes memóriateret belerakni, gapekkel együtt. 
+ 
+    First = 0-val kezdődik, Disassembly of... rész előtti utolsó memóriacím
+    FirstSize = 0-val kezdődik, Disassembly of... rész előtti utolsó memóriacím alatti utasítás hossza
+    Curr = Disassembly of... rész után első memóriacím
+
+    fillzeroz(Curr-First-FirstSize-1)
+    Eredmény: "tökéletes" memóriareprezentáció, aminek utána tökéletesen kell futnia
+- Meg kell határozni azt a memóriacímet, ahol vége lesz a futásnak (vagyis a mainben lévő retet), vaagy a verem tetejére bepakolni egy számot
