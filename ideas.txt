@@ -10,3 +10,4 @@
     fillzeroz(Curr-First-FirstSize-1)
     Eredmény: "tökéletes" memóriareprezentáció, aminek utána tökéletesen kell futnia
 - Meg kell határozni azt a memóriacímet, ahol vége lesz a futásnak (vagyis a mainben lévő retet), vaagy a verem tetejére bepakolni egy számot
+- CAPSTONE DOKSI!!!!
