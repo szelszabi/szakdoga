@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.s": "asm-intel-x86-generic",
+        "unicorn.h": "c",
+        "stdio.h": "c"
+    }
+}
