@@ -2,6 +2,7 @@ from unicorn import *
 from unicorn.x86_const import *
 from getmc import asm_to_main_machine_code
 import capstone
+import capstone.x86_const as cx86
 import json
 
 inst_counter = {}
@@ -20,8 +21,29 @@ def hook_mem_read(uc, access, address, size, value, user_data):
 def hook_code(uc, address, size, user_data):
     global const_counter
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
+    md.detail = True
     inst_bytes = uc.mem_read(address,size)
     for i in md.disasm(inst_bytes, address):
+
+        for operand in i.operands:
+            if operand.type == cx86.X86_OP_IMM:
+                print("\t\tIMM = 0x%x" %(operand.value.imm))
+            if operand.type == cx86.X86_OP_MEM:
+                print("\t\ttype: MEM")
+                if operand.value.mem.base != 0:
+                    print("\t\t\tmem.base: REG = %s" \
+                        %(i.reg_name(operand.value.mem.base)))
+                if operand.value.mem.index != 0:
+                    print("\t\t\tmem.index: REG = %s" \
+                        %(i.reg_name(operand.value.mem.index)))
+                if operand.value.mem.disp != 0: # offset
+                    print("\t\t\tmem.disp: 0x%x" \
+                        %(operand.value.mem.disp))
+                if operand.value.mem.scale != 0:
+                    print(f"\t\t\tscale factor: {operand.value.mem.scale}")
+                
+            if operand.type == cx86.X86_OP_REG:
+                print("\t\t.type: REG = %s" %(i.reg_name(operand.value.reg)))
 
         for operand in i.op_str.split(','):
             if "0x" in operand:

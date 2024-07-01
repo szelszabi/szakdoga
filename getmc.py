@@ -11,8 +11,8 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
     main_mem_address = 0
     is_next_main = False
 
-    os.system(f"objdump -D -z -d -M intel {fname} > dumpi.tmp")
-    file = open("dumpi.tmp", "r")
+    os.system(f"objdump -D -z -d -M intel {fname} > dumpi2.tmp")
+    file = open("dumpi2.tmp", "r")
     lines = file.readlines()
     file.close()
 
@@ -61,5 +61,5 @@ Futtatható állományt vár
 
 if __name__ == '__main__':
     #print(bytes(fill(40,3,60)))
-    asm_to_main_machine_code('fakt.out')
+    asm_to_main_machine_code('a.out')
     pass
