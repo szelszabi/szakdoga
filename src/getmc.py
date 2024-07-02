@@ -11,8 +11,8 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
     main_mem_address = 0
     is_next_main = False
 
-    os.system(f"objdump -D -z -d -M intel ../bin/{fname} > dumpi2.tmp")
-    file = open("dumpi2.tmp", "r")
+    os.system(f"objdump -D -z -d -M intel ../bin/{fname} > ../dump_files/dumpi.tmp")
+    file = open("dumpi.tmp", "r")
     lines = file.readlines()
     file.close()
 
