@@ -4,6 +4,7 @@ from getmc import asm_to_main_machine_code
 import capstone
 import capstone.x86_const as cx86
 import json
+import jsbeautifier as jb
 
 inst_counter = {}
 const_counter = 0
@@ -49,12 +50,13 @@ def hook_code(uc, address, size, user_data):
                 print("\t\t.type: REG = %s" %(i.reg_name(op.value.reg)))
 
             
-
-        key = f"{hex(i.address)}    {i.mnemonic}"
+        
+        key = f"{hex(i.address)}"
         if  key not in list(inst_counter.keys()):
-            inst_counter[key] = 1
+            inst_counter[key] = (i.mnemonic, 1)
         else:
-            inst_counter[key] += 1
+            x = inst_counter[key][1]
+            inst_counter[key] = (i.mnemonic, x+1)
         #TODO függvények használatánál ez nem lesz hasznos
         if i.mnemonic == "ret":
             mu.emu_stop()
@@ -86,7 +88,11 @@ except UcError as e:
     print("ERROR: %s" % e)
     print(mu.reg_read(UC_X86_REG_RIP))
 
-print(json.dumps(inst_counter,sort_keys=True, indent=4))
+
+options = jb.default_options()
+options.keep_array_indentation = True
+print(jb.beautify(json.dumps(inst_counter), options))
+
 print(f"Konstansok száma: {const_counter}")
 print(f"Memóriahozzáférések száma: {mem_write + mem_read}")
 print(f"Memória írás: {mem_write}")

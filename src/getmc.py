@@ -12,7 +12,10 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
     is_next_main = False
 
     os.system(f"objdump -D -z -d -M intel ../bin/{fname} > ../dump_files/dumpi.tmp")
-    file = open("dumpi.tmp", "r")
+    try:
+        file = open("../dump_files/dumpi.tmp", "r")
+    except OSError:
+        raise OSError
     lines = file.readlines()
     file.close()
 
