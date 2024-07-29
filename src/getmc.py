@@ -10,7 +10,7 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
 
     main_mem_address = 0
     is_next_main = False
-
+    os.chdir(os.getcwd() + "/src")
     os.system(f"objdump -D -z -d -M intel ../bin/{fname} > ../dump_files/dumpi.tmp")
     try:
         file = open("../dump_files/dumpi.tmp", "r")

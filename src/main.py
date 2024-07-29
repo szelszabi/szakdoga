@@ -6,13 +6,25 @@ import capstone.x86_const as cx86
 import json
 import jsbeautifier as jb
 
-inst_counter = {}
+
+mem_addr_types_counter = {
+    "O": 0,
+    "B": 0,
+    "BI": 0,
+    "BO": 0,
+    "BIO": 0,
+    "BIS": 0,
+    "ISO": 0,
+    "BISO": 0
+}
+addr_counter = {}
+instr_counter = {}
 const_counter = 0
-mem_write = 0
-mem_read = 0
+mem_write_counter = 0
+mem_read_counter = 0
 
 def hook_code(uc, address, size, user_data):
-    global const_counter, mem_write, mem_read
+    global const_counter, mem_write_counter, mem_read_counter, mem_addr_types_counter
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
     md.detail = True
     inst_bytes = uc.mem_read(address,size)
@@ -26,6 +38,7 @@ def hook_code(uc, address, size, user_data):
 
             if op.type == cx86.X86_OP_MEM:
                 print("\t\ttype: MEM")
+                (B, I, S, O) = (op.mem.base, op.mem.index, op.mem.scale, op.mem.disp)
                 if op.mem.base != 0:
                     print("\t\t\tmem.base: REG = %s" \
                         %(i.reg_name(op.mem.base)))
@@ -37,12 +50,29 @@ def hook_code(uc, address, size, user_data):
                         %(op.mem.disp))
                 if op.mem.scale != 0:
                     print(f"\t\t\tscale factor: {op.mem.scale}")
+                
+                if B == 0 and I == 0 and S == 1 and O != 0:
+                    mem_addr_types_counter["O"] += 1
+                elif B != 0 and I == 0 and S == 1 and O == 0:
+                    mem_addr_types_counter["B"] += 1
+                elif B != 0 and I != 0 and S == 1 and O == 0:
+                    mem_addr_types_counter["BI"] += 1
+                elif B != 0 and I == 0 and S == 1 and O != 0:
+                    mem_addr_types_counter["BO"] += 1
+                elif B != 0 and I != 0 and S == 1 and O != 0:
+                    mem_addr_types_counter["BIO"] += 1
+                elif B != 0 and I != 0 and S != 1 and O == 0:
+                    mem_addr_types_counter["BIS"] += 1
+                elif B == 0 and I != 0 and S != 1 and O != 0:
+                    mem_addr_types_counter["ISO"] += 1
+                elif B != 0 and I != 0 and S != 1 and O != 0:
+                    mem_addr_types_counter["BISO"] += 1
 
                 match(op.access):
                     case capstone.CS_AC_READ:
-                        mem_read += 1
+                        mem_read_counter += 1
                     case capstone.CS_AC_WRITE:
-                        mem_write += 1
+                        mem_write_counter += 1
 
 
             if op.type == cx86.X86_OP_REG:
@@ -51,12 +81,17 @@ def hook_code(uc, address, size, user_data):
 
             
         
-        key = f"{hex(i.address)}"
-        if  key not in list(inst_counter.keys()):
-            inst_counter[key] = (i.mnemonic, 1)
+        addr_key = f"{hex(i.address)}"
+        if  addr_key not in list(addr_counter.keys()):
+            addr_counter[addr_key] = (i.mnemonic, 1)
         else:
-            x = inst_counter[key][1]
-            inst_counter[key] = (i.mnemonic, x+1)
+            x = addr_counter[addr_key][1]
+            addr_counter[addr_key] = (i.mnemonic, x+1)
+
+        if i.mnemonic not in list(instr_counter.keys()):
+            instr_counter[i.mnemonic] = 1
+        else:
+            instr_counter[i.mnemonic] += 1
         #TODO függvények használatánál ez nem lesz hasznos
         if i.mnemonic == "ret":
             mu.emu_stop()
@@ -91,9 +126,16 @@ except UcError as e:
 
 options = jb.default_options()
 options.keep_array_indentation = True
-print(jb.beautify(json.dumps(inst_counter), options))
+print("Hányszor ugrott egyes címekre:")
+print(jb.beautify(json.dumps(addr_counter), options))
+
+print("Memória címzések típusok száma:")
+print(jb.beautify(json.dumps(mem_addr_types_counter), options))
+
+print("Mnemonikok száma:")
+print(jb.beautify(json.dumps(instr_counter), options))
 
 print(f"Konstansok száma: {const_counter}")
-print(f"Memóriahozzáférések száma: {mem_write + mem_read}")
-print(f"Memória írás: {mem_write}")
-print(f"Memória olvas: {mem_read}")
+print(f"Memóriahozzáférések száma: {mem_write_counter + mem_read_counter}")
+print(f"Memória írás: {mem_write_counter}")
+print(f"Memória olvas: {mem_read_counter}")

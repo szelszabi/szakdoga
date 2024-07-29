@@ -12,5 +12,7 @@
 - mnemonikok összesítése
 - konstansok jobb számolása(capstone) PIPA
 - Memóriaműveletek számolása PIPA
-- címzési módok 
+- Címzési módok PIPA
 - makefile, amiben futtatható a program és fordítható az assembly forrás
+- Jobb modularizáció
+- Statisztikához szükséges csomagok utáni kutatás és megkerítés
