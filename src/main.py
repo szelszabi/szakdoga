@@ -32,14 +32,14 @@ def hook_code(uc, address, size, user_data):
 
         for op in i.operands:
             if op.type == cx86.X86_OP_IMM:
-                print("\t\tIMM = 0x%x" %(op.value.imm))
+                #print("\t\tIMM = 0x%x" %(op.value.imm))
                 const_counter += 1
 
 
             if op.type == cx86.X86_OP_MEM:
-                print("\t\ttype: MEM")
+                # print("\t\ttype: MEM")
                 (B, I, S, O) = (op.mem.base, op.mem.index, op.mem.scale, op.mem.disp)
-                if op.mem.base != 0:
+                """ if op.mem.base != 0:
                     print("\t\t\tmem.base: REG = %s" \
                         %(i.reg_name(op.mem.base)))
                 if op.mem.index != 0:
@@ -49,7 +49,7 @@ def hook_code(uc, address, size, user_data):
                     print("\t\t\tmem.disp: 0x%x" \
                         %(op.mem.disp))
                 if op.mem.scale != 0:
-                    print(f"\t\t\tscale factor: {op.mem.scale}")
+                    print(f"\t\t\tscale factor: {op.mem.scale}") """
                 
                 if B == 0 and I == 0 and S == 1 and O != 0:
                     mem_addr_types_counter["O"] += 1
@@ -77,7 +77,7 @@ def hook_code(uc, address, size, user_data):
 
             if op.type == cx86.X86_OP_REG:
                 pass
-                print("\t\t.type: REG = %s" %(i.reg_name(op.value.reg)))
+                #print("\t\t.type: REG = %s" %(i.reg_name(op.value.reg)))
 
             
         
@@ -92,33 +92,39 @@ def hook_code(uc, address, size, user_data):
             instr_counter[i.mnemonic] = 1
         else:
             instr_counter[i.mnemonic] += 1
-        #TODO függvények használatánál ez nem lesz hasznos
+
+
         if i.mnemonic == "ret":
-            mu.emu_stop()
-        print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
+            top_of_stack = mu.mem_read(mu.reg_read(UC_X86_REG_RSP), 8)
+            top_of_stack.reverse()
+            if top_of_stack == b'STOPVEGE':
+                mu.emu_stop()
+        # print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
 
 
-data, main_addr = asm_to_main_machine_code('a.out')
+data, main_addr = asm_to_main_machine_code('a.oMs. Pac-Manut')
 
 # X86_CODE32 = b"\x66\xbb\x01\x00\x66\xb8\x01\x00\xeb\x08\x66\xf7\xe3\x66\x99\x66\xff\xc3\x66\x83\xfb\x05\x7e\xf2\x66\x89\xc1"
-INIT_CODE = "asd" # TODO putting a special value on top of stack to check final return
+INIT_CODE = b"\x48\xb8\x45\x47\x45\x56\x50\x4f\x54\x53\x50" # Pushes 'STOPVEGE' in binary to stack
 X86_CODE32 = bytes(data)
 ADDRESS = 0x0
 
 mu = Uc(UC_ARCH_X86, UC_MODE_64)
 try:
     mu.mem_map(ADDRESS, 30 * 1024 * 1024)
-    mu.mem_write(ADDRESS, X86_CODE32)
 
-    mu.reg_write(UC_X86_REG_RSP, ADDRESS + 0x200000)
+    mu.reg_write(UC_X86_REG_RSP, ADDRESS + 0x1000000)
+
+    mu.mem_write(ADDRESS, INIT_CODE)
+    mu.emu_start(ADDRESS, ADDRESS + len(INIT_CODE))
 
     mu.hook_add(UC_HOOK_CODE, hook_code)
 
+    mu.mem_write(ADDRESS, X86_CODE32)
     mu.emu_start(ADDRESS + main_addr, ADDRESS + len(X86_CODE32))
 
     r_ax = mu.reg_read(UC_X86_REG_EAX)
     r_bx = mu.reg_read(UC_X86_REG_EBX)
-    print(f"AX: {r_ax} BX: {r_bx}")
 except UcError as e:
     print("ERROR: %s" % e)
     print(mu.reg_read(UC_X86_REG_RIP))

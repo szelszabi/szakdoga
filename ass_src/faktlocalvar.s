@@ -18,6 +18,4 @@ cond:   mov bx, WORD PTR [rbp-2]
         jle body
         mov rsp, rbp
         pop rbp
-        pop rdx
-        push rdx
         ret
