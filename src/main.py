@@ -29,7 +29,7 @@ def hook_code(uc, address, size, user_data):
     md.detail = True
     inst_bytes = uc.mem_read(address,size)
     for i in md.disasm(inst_bytes, address):
-
+        print(i)
         for op in i.operands:
             if op.type == cx86.X86_OP_IMM:
                 #print("\t\tIMM = 0x%x" %(op.value.imm))
@@ -39,7 +39,7 @@ def hook_code(uc, address, size, user_data):
             if op.type == cx86.X86_OP_MEM:
                 # print("\t\ttype: MEM")
                 (B, I, S, O) = (op.mem.base, op.mem.index, op.mem.scale, op.mem.disp)
-                """ if op.mem.base != 0:
+                if op.mem.base != 0:
                     print("\t\t\tmem.base: REG = %s" \
                         %(i.reg_name(op.mem.base)))
                 if op.mem.index != 0:
@@ -49,7 +49,7 @@ def hook_code(uc, address, size, user_data):
                     print("\t\t\tmem.disp: 0x%x" \
                         %(op.mem.disp))
                 if op.mem.scale != 0:
-                    print(f"\t\t\tscale factor: {op.mem.scale}") """
+                    print(f"\t\t\tscale factor: {op.mem.scale}")
                 
                 if B == 0 and I == 0 and S == 1 and O != 0:
                     mem_addr_types_counter["O"] += 1
@@ -102,7 +102,7 @@ def hook_code(uc, address, size, user_data):
         # print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
 
 
-data, main_addr = asm_to_main_machine_code('a.oMs. Pac-Manut')
+data, main_addr = asm_to_main_machine_code('a.out')
 
 # X86_CODE32 = b"\x66\xbb\x01\x00\x66\xb8\x01\x00\xeb\x08\x66\xf7\xe3\x66\x99\x66\xff\xc3\x66\x83\xfb\x05\x7e\xf2\x66\x89\xc1"
 INIT_CODE = b"\x48\xb8\x45\x47\x45\x56\x50\x4f\x54\x53\x50" # Pushes 'STOPVEGE' in binary to stack
@@ -111,7 +111,7 @@ ADDRESS = 0x0
 
 mu = Uc(UC_ARCH_X86, UC_MODE_64)
 try:
-    mu.mem_map(ADDRESS, 30 * 1024 * 1024)
+    mu.mem_map(ADDRESS, 50 * 1024 * 1024)
 
     mu.reg_write(UC_X86_REG_RSP, ADDRESS + 0x1000000)
 
@@ -123,11 +123,15 @@ try:
     mu.mem_write(ADDRESS, X86_CODE32)
     mu.emu_start(ADDRESS + main_addr, ADDRESS + len(X86_CODE32))
 
+    print(mu.reg_read(UC_X86_REG_RCX))
+
     r_ax = mu.reg_read(UC_X86_REG_EAX)
     r_bx = mu.reg_read(UC_X86_REG_EBX)
 except UcError as e:
     print("ERROR: %s" % e)
-    print(mu.reg_read(UC_X86_REG_RIP))
+    print(hex(mu.reg_read(UC_X86_REG_RIP)))
+    print(mu.reg_read(UC_X86_REG_AX))
+
 
 
 options = jb.default_options()

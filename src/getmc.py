@@ -2,8 +2,7 @@ import os
 
 
 def fill(first, first_size, curr):
-    # -1 nem biztos, hogy kell majd kiderül
-    return (curr-(first + first_size)) * [0]
+    return (curr-first + first_size) * [0]
 
 def asm_to_main_machine_code(fname: str) -> list[int]:
     result = []
@@ -11,7 +10,7 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
     main_mem_address = 0
     is_next_main = False
     os.chdir(os.getcwd() + "/src")
-    os.system(f"objdump -D -z -d -M intel ../bin/{fname} > ../dump_files/dumpi.tmp")
+    os.system(f"objdump -D -z -d -M intel --start-address=0x0 ../bin/{fname} > ../dump_files/dumpi.tmp")
     try:
         file = open("../dump_files/dumpi.tmp", "r")
     except OSError:
@@ -23,9 +22,13 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
     last_line = ""
 
     for line in lines:
-        machine_code = line[line.find('\t'):line.rfind('\t')+1].strip()
+        machine_code = ''
+        if line.count('\t') == 2:
+            machine_code = line[line.find('\t'):line.rfind('\t')+1].strip()
+        elif line.count('\t') == 1:
+            machine_code = line[line.find('\t'):].strip()
         last_instr_len = 0
-
+        
         if machine_code != '':
             if is_next_main:
                 main_mem_address = len(result)
@@ -51,12 +54,16 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
             is_next_main = True
         elif "Disassembly of section" in line:
             after_dis = True
-        elif ".comment" in line:
+        elif ".comment" in line or len(result) > 4198695:
             break
 
-    # try:
-    #     os.remove("dumpi.tmp")
-    # finally:
+    try:
+        os.remove("dumpi.tmp")
+    except IOError:
+        print("IOError")
+    for x in result:
+        #print(hex(x), end=', ')
+        pass
     return (result,main_mem_address)
 """ 
 Futtatható állományt vár 
