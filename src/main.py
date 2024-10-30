@@ -17,6 +17,7 @@ mem_addr_types_counter = {
     "ISO": 0,
     "BISO": 0
 }
+register_counter = {}
 addr_counter = {}
 instr_counter = {}
 const_counter = 0
@@ -24,7 +25,7 @@ mem_write_counter = 0
 mem_read_counter = 0
 
 def hook_code(uc, address, size, user_data):
-    global const_counter, mem_write_counter, mem_read_counter, mem_addr_types_counter
+    global const_counter, mem_write_counter, mem_read_counter, mem_addr_types_counter, register_counter
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
     md.detail = True
     inst_bytes = uc.mem_read(address,size)
@@ -76,8 +77,11 @@ def hook_code(uc, address, size, user_data):
 
 
             if op.type == cx86.X86_OP_REG:
-                pass
-                #print("\t\t.type: REG = %s" %(i.reg_name(op.value.reg)))
+                register = i.reg_name(op.value.reg)
+                if register not in list(register_counter.keys()):
+                    register_counter[register] = 1
+                else:
+                    register_counter[register] += 1
 
             
         
@@ -116,6 +120,7 @@ try:
     mu.reg_write(UC_X86_REG_RSP, ADDRESS + 0x1000000)
 
     mu.mem_write(ADDRESS, INIT_CODE)
+
     mu.emu_start(ADDRESS, ADDRESS + len(INIT_CODE))
 
     mu.hook_add(UC_HOOK_CODE, hook_code)
@@ -136,16 +141,25 @@ except UcError as e:
 
 options = jb.default_options()
 options.keep_array_indentation = True
+
 print("Hányszor ugrott egyes címekre:")
 print(jb.beautify(json.dumps(addr_counter), options))
-
 print("Memória címzések típusok száma:")
 print(jb.beautify(json.dumps(mem_addr_types_counter), options))
-
 print("Mnemonikok száma:")
 print(jb.beautify(json.dumps(instr_counter), options))
-
+print("Regiszterhasználatok száma:")
+print(jb.beautify(json.dumps(register_counter), options))
 print(f"Konstansok száma: {const_counter}")
 print(f"Memóriahozzáférések száma: {mem_write_counter + mem_read_counter}")
 print(f"Memória írás: {mem_write_counter}")
 print(f"Memória olvas: {mem_read_counter}")
+
+output_data = {"addr_counter": addr_counter, "mem_addr_types_counter": mem_addr_types_counter,\
+               "instr_counter": instr_counter,"register_counter": register_counter,"const_counter": const_counter,\
+                "mem_write_counter": mem_write_counter, "mem_read_counter": mem_read_counter}
+
+print(output_data)
+
+with open('data.json', 'w') as f:
+    json.dump(output_data, f, ensure_ascii=False, indent=4)

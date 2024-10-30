@@ -9,8 +9,9 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
 
     main_mem_address = 0
     is_next_main = False
-    os.chdir(os.getcwd() + "/src")
-    os.system(f"objdump -D -z -d -M intel --start-address=0x0 ../bin/{fname} > ../dump_files/dumpi.tmp")
+    os.chdir(os.getcwd() + "/bin")
+    print(os.getcwd())
+    os.system(f"objdump -D -z -d -M intel --start-address=0x0 ./{fname} > ../dump_files/dumpi.tmp")
     try:
         file = open("../dump_files/dumpi.tmp", "r")
     except OSError:
@@ -57,10 +58,6 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
         elif ".comment" in line or len(result) > 4198695:
             break
 
-    try:
-        os.remove("dumpi.tmp")
-    except IOError:
-        print("IOError")
     for x in result:
         #print(hex(x), end=', ')
         pass
