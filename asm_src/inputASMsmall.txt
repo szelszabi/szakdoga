@@ -1,0 +1,36 @@
+	sub	rsp, 124
+
+	mov	DWORD PTR [rbp-124], 30
+	mov	DWORD PTR [rbp-120], 1571
+	mov	DWORD PTR [rbp-116], 828
+	mov	DWORD PTR [rbp-112], 878
+	mov	DWORD PTR [rbp-108], 883
+	mov	DWORD PTR [rbp-104], 1337
+	mov	DWORD PTR [rbp-100], 1024
+	mov	DWORD PTR [rbp-96], 897
+	mov	DWORD PTR [rbp-92], 5
+	mov	DWORD PTR [rbp-88], 1931
+	mov	DWORD PTR [rbp-84], 422
+	mov	DWORD PTR [rbp-80], 32
+	mov	DWORD PTR [rbp-76], 685
+	mov	DWORD PTR [rbp-72], 1315
+	mov	DWORD PTR [rbp-68], 1697
+	mov	DWORD PTR [rbp-64], 731
+	mov	DWORD PTR [rbp-60], 61
+	mov	DWORD PTR [rbp-56], 1765
+	mov	DWORD PTR [rbp-52], 1962
+	mov	DWORD PTR [rbp-48], 138
+	mov	DWORD PTR [rbp-44], 1
+	mov	DWORD PTR [rbp-40], 1565
+	mov	DWORD PTR [rbp-36], 3
+	mov	DWORD PTR [rbp-32], 2
+	mov	DWORD PTR [rbp-28], 343
+	mov	DWORD PTR [rbp-24], 4
+	mov	DWORD PTR [rbp-20], 1304
+	mov	DWORD PTR [rbp-16], 517
+	mov	DWORD PTR [rbp-12], 1076
+	mov	DWORD PTR [rbp-8], 1233
+	mov	DWORD PTR [rbp-4], 1962
+
+	lea rdi, QWORD PTR [rbp-120]
+	mov esi, DWORD PTR [rbp-124]

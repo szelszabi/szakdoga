@@ -4,18 +4,24 @@ import os
 def fill(first, first_size, curr):
     return (curr-first + first_size) * [0]
 
+def compile_code(fname):
+    extension = fname[fname.rfind('.')+1:]
+    output_fname = fname[0:fname.rfind('.')] + ("_C" if extension == "c" else "_ASM") + ".out"
+    os.system(f"gcc asm_src/{fname} -o bin/{output_fname}")
+    return output_fname
+
+
 def asm_to_main_machine_code(fname: str) -> list[int]:
     result = []
-
     main_mem_address = 0
     is_next_main = False
-    os.chdir(os.getcwd() + "/bin")
-    print(os.getcwd())
-    os.system(f"objdump -D -z -d -M intel --start-address=0x0 ./{fname} > ../dump_files/dumpi.tmp")
+    bin_fname = compile_code(fname)
+    os.system(f"objdump -D -z -d -M intel --start-address=0x0 bin/{bin_fname} > dump_files/dumpi.tmp")
     try:
-        file = open("../dump_files/dumpi.tmp", "r")
-    except OSError:
-        raise OSError
+        file = open("dump_files/dumpi.tmp", "r")
+    except IOError:
+        print("Couldn't open file: dump_files/dumpi.tmp")
+        raise IOError
     lines = file.readlines()
     file.close()
 
@@ -62,9 +68,7 @@ def asm_to_main_machine_code(fname: str) -> list[int]:
         #print(hex(x), end=', ')
         pass
     return (result,main_mem_address)
-""" 
-Futtatható állományt vár 
-"""    
+
 
 if __name__ == '__main__':
     #print(bytes(fill(40,3,60)))

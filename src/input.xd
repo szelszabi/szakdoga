@@ -1,0 +1,11 @@
+	sub	rsp, 24
+
+	mov	DWORD PTR [rbp-24], 5
+	mov	DWORD PTR [rbp-20], 834
+	mov	DWORD PTR [rbp-16], 789
+	mov	DWORD PTR [rbp-12], 542
+	mov	DWORD PTR [rbp-8], 621
+	mov	DWORD PTR [rbp-4], 1088
+
+	 lea rdi, QWORD PTR [rbp-20]
+	 mov esi, DWORD PTR [rbp-24]
