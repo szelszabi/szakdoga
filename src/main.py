@@ -25,6 +25,7 @@ const_counter = 0
 mem_write_counter = 0
 mem_read_counter = 0
 runtime = 0
+log = open("log.txt", "w")
 
 def hook_code(uc, address, size, user_data):
     global const_counter, mem_write_counter, mem_read_counter, mem_addr_types_counter, register_counter
@@ -32,9 +33,24 @@ def hook_code(uc, address, size, user_data):
     md.detail = True
     inst_bytes = uc.mem_read(address,size)
     for i in md.disasm(inst_bytes, address):
-        # print(i)
-        # print("ESI: "+ hex(mu.reg_read(UC_X86_REG_ESI)))
-        # print("EDX: "+ hex(mu.reg_read(UC_X86_REG_EDX)))
+
+        print("count[0]: " + str(mu.mem_read(mu.reg_read(UC_X86_REG_R9),4)), file=log)
+        print("count[1]: " + str(mu.mem_read(mu.reg_read(UC_X86_REG_R9)+4,4)), file=log)
+        print("count[2]: " + str(mu.mem_read(mu.reg_read(UC_X86_REG_R9)+8,4)), file=log)
+        print("count[3]: " + str(mu.mem_read(mu.reg_read(UC_X86_REG_R9)+12,4)), file=log)
+        print("EAX: "+ str(mu.reg_read(UC_X86_REG_EAX)), file=log)
+        print("EBX: "+ str(mu.reg_read(UC_X86_REG_EBX)), file=log)
+        print("ECX: " + str(mu.reg_read(UC_X86_REG_ECX)), file=log)
+        print("EDX: "+ str(mu.reg_read(UC_X86_REG_EDX)), file=log)
+
+        print("R8: "+ str(mu.reg_read(UC_X86_REG_R8)), file=log)
+        print("R9: "+ hex(mu.reg_read(UC_X86_REG_R9)), file=log)
+        print("R10: "+ hex(mu.reg_read(UC_X86_REG_R10)), file=log)
+        print("R11: " + str(mu.reg_read(UC_X86_REG_R11)), file=log)
+        print("R12: " + str(mu.reg_read(UC_X86_REG_R12)), file=log)
+        print("R15: " + str(mu.reg_read(UC_X86_REG_R15)), file=log)
+        print("RBP: "+ hex(mu.reg_read(UC_X86_REG_RBP)), file=log)
+        print(i, file=log)
         for op in i.operands:
             if op.type == cx86.X86_OP_IMM:
                 #print("\t\tIMM = 0x%x" %(op.value.imm))
@@ -146,8 +162,9 @@ try:
     print(mu.reg_read(UC_X86_REG_RAX))
 
 except UcError as e:
-    print("ERROR: %s" % e)
-    print(hex(mu.reg_read(UC_X86_REG_RIP)))
+    print("ERROR: %s" % e, file=log)
+    print(hex(mu.reg_read(UC_X86_REG_RIP)), file=log)
+    log.close()
     exit(255)
 
 
